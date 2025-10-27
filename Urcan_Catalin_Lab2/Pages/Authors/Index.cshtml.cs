@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Urcan_Catalin_Lab2.Data;
 using Urcan_Catalin_Lab2.Models;
 
-namespace Urcan_Catalin_Lab2.Pages.Books
+namespace Urcan_Catalin_Lab2.Pages.Authors
 {
     public class IndexModel : PageModel
     {
@@ -19,11 +19,11 @@ namespace Urcan_Catalin_Lab2.Pages.Books
             _context = context;
         }
 
-        public IList<Book> Book { get;set; } = default!;
+        public IList<Author> Author { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Book = await _context.Book.Include(b => b.Publisher).Include(a => a.Author).ToListAsync();
+            Author = await _context.Author.ToListAsync();
         }
     }
 }
