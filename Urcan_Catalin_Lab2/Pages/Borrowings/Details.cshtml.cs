@@ -29,7 +29,10 @@ namespace Urcan_Catalin_Lab2.Pages.Borrowings
                 return NotFound();
             }
 
-            var borrowing = await _context.Borrowing.FirstOrDefaultAsync(m => m.ID == id);
+            var borrowing = await _context.Borrowing
+                .Include(b => b.Book)
+                .ThenInclude(b => b.Author)
+                .Include(b => b.Member).FirstOrDefaultAsync(m => m.ID == id);
             if (borrowing == null)
             {
                 return NotFound();
@@ -37,16 +40,6 @@ namespace Urcan_Catalin_Lab2.Pages.Borrowings
             else
             {
                 Borrowing = borrowing;
-            //    var bookList = _context.Book
-            //.Include(b => b.Author)
-            //.Select(x => new
-            //{
-            //    x.ID,
-            //    BookFullName = x.Title + " - " + x.Author.LastName + " " + x.Author.FirstName
-            //});
-
-            //    ViewData["BookID"] = new SelectList(bookList, "ID", "BookFullName");
-            //    ViewData["MemberID"] = new SelectList(_context.Member, "ID", "FullName");
             }
 
             
